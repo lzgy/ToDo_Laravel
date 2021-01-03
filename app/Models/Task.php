@@ -13,6 +13,9 @@ class Task extends Model
     //primary key
     protected $primaryKey = 'id';
     protected $task_title = "task_title";
+    protected $task_content = "task_content";
+    protected $isFinished = "isFinished";
+    
     public $timestamps = true;
 
 }

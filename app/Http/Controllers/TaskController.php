@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
@@ -15,24 +16,7 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        
-        $result = $request->input('isFinished');
-        $hol = '1';
-        //return print_r($result);
-        if (isset($result))$hol = '1';
-        else $hol = '0';
-        //$select = "SELECT * FROM tasks where ";
-        //if($result == "Kész") $hol = "1";
-        //$selet = $select . $hol;
-        //return $hol;
-        $tasks = Task::where('isFinished', '=',$hol)->get();
-        
-        //return print_r($tasks);
-        //$tasks = DB::select("SELECT * FROM tasks where isFinished = 0");
-        //$tasks = DB::table('tasks')->where('isFinished', '=','1')->get();
-
-       // $tasks = Task::orderby('created_at','asc')->paginate(10);
-        return view('tasks.index')->with('tasks', $tasks);
+        return Task::orderBy('created_at', 'DESC')->get();
     }
 
     
@@ -56,20 +40,21 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'task_title' => 'required',
-            'task_content' => 'required'
-        ]);
-
         $task = new Task;
-        $task->task_title = $request->input('task_title');
-        $task->task_content = $request->input('task_content');
-        $task->isFinished = 0;
-        //$task->created_at = date("Y-m-d H:i:s");
-        //$task->updated_at = date("Y-m-d H:i:s");
+        
+        $task->task_title = $request->task["task_title"];
+        $task->task_content = $request->task["task_content"];
+        if( isset( $request->task["isFinished"]) ) 
+        {
+            $task->isFinished = $request->task["isFinished"];
+        }
+        else
+        {
+            $task->isFinished = 0;
+        }
+        
         $task->save();
-
-        return \redirect('/tasks')->with('succes', 'Feladat elkészítve');
+        return $task;
     }
 
     /**
@@ -105,24 +90,24 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'task_title' => 'required',
-            'task_content' => 'required'
-        ]);
+        $task = Task::find( $id );
 
-        $task = Task::find($id);
-        $task->task_title = $request->input('task_title');
-        $task->task_content = $request->input('task_content');
-        //error_log("is Finished: [" . $request->input('isFinished') . "]");
-        
-        $val = $request->input('isFinished');
+        $result = "A feladat nem található! Nem lehetséges frissíteni!";
 
-        if (isset($val)) $task->isFinished = 1;
-        else $task->isFinished = 0;
-        
-        $task->save();
-
-        return \redirect('/tasks')->with('succes', 'Feladat Módosítva');
+        if ($task)
+        {
+            if ( $request->task["isFinished"] == "0")
+            {
+                $task->isFinished = 0;    
+            }
+            else
+            {
+                $task->isFinished = 1;
+            }   
+            $task->save();
+            $result = $task;
+        } 
+        return  $result;       
     }
 
     
@@ -135,9 +120,13 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        $task = Task::find($id);
-        $task->delete();
-
-        return redirect('/tasks')->with('succes','Feladat törölve!');
+        $result = "$id. azonosítójú elem nem található!";
+        $task = Task::find( $id );
+        if ( $task )
+        {
+            $task->delete();
+            $result = "$id. azonosítójú elem törlése megtörtént!";
+        }
+        return $result;
     }
 }

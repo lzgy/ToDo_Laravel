@@ -14,10 +14,11 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-Route::get('/', [TaskController::class,'index'])->name('tasks.index');
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::resource('tasks', TaskController::class);
+//Route::get('/', [TaskController::class,'index'])->name('tasks.index');
+
+//Route::resource('tasks', TaskController::class);
 
