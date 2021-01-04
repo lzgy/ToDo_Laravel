@@ -2,12 +2,14 @@
     <div class="toolListContainer">
         <div class="heading">
             <h1 id = "title">Todo List</h1>
-            <insert-form />
+            <insert-form 
+                v-on:reloadlist="getList()"
+            />
         </div>
         <select-view 
             :tasks="tasks"
             v-on:reloadlist="getList()" />    
-        />
+        
     </div>
 </template>
 
@@ -54,6 +56,7 @@ import selectView from "./selectView"
     }
 
     #title {
+        font-family: 'Brush Script MT', cursive;
         text-align: center;
     }
 </style>

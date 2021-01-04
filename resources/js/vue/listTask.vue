@@ -1,7 +1,17 @@
 <template>
     <div class = "task">
-        <input type="checkbox" @change="updateCheck()" v-model="task.isFinished" />
-        <span :class="[task.isFinished ? 'finished' : '', 'taskText']"> {{ task.task_title }}</span>
+        <div class="title">
+            <span :class="[task.isFinished ? 'finished' : '', 'taskText']"> 
+                <div>
+                    <h3>
+                        <input type="checkbox" @change="updateCheck()" v-model="task.isFinished" />{{ task.task_title }}
+                    </h3>
+                </div>
+                <div>{{ task.task_content }}</div>
+                <div></div>
+                <div class = "modified"><label>Módosítva: </label>{{ task.updated_at }}</div>
+            </span>
+        </div>
         <button @click="removeTask()" class="trashcan">
             <font-awesome-icon icon="trash" />
         </button>
@@ -41,6 +51,13 @@ export default {
 </script>
 
 <style scoped>
+.title span div h3{
+    font-family: 'Brush Script MT', cursive
+}
+.modified{
+    /*font-family: 'Brush Script MT', cursive;*/
+    font-style: italic;
+}
 .finished {
     text-decoration: line-through;
     color: #999999;
@@ -52,13 +69,12 @@ export default {
 .task {
     display: flex;
     justify-content: center;
-    align-items: center;
+    /*align-items: center;*/
 }
-
 .trashcan {
     background: #e6e6e6;
     border: none;
-    color: #FF0000;
+    color: #FF0999;
     outline: none;
 }
 </style>

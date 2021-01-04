@@ -19,9 +19,6 @@ class TaskController extends Controller
         return Task::orderBy('created_at', 'DESC')->get();
     }
 
-    
-    
-
     /**
      * Show the form for creating a new resource.
      *
@@ -109,8 +106,6 @@ class TaskController extends Controller
         } 
         return  $result;       
     }
-
-    
 
     /**
      * Remove the specified resource from storage.
