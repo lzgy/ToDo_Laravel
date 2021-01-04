@@ -1,7 +1,7 @@
 <template>
     <div class = "task">
         <div class="title">
-            <span :class="[task.isFinished ? 'finished' : '', 'taskText']"> 
+            <span :class="[task.isFinished ? 'finished' : '']">
                 <div>
                     <h3>
                         <input type="checkbox" @change="updateCheck()" v-model="task.isFinished" />{{ task.task_title }}
@@ -51,30 +51,30 @@ export default {
 </script>
 
 <style scoped>
-.title span div h3{
+.title {
+    overflow: auto;
+    padding: 5px;
+    width: 100%;
+}
+.title span div h3 {
     font-family: 'Brush Script MT', cursive
 }
-.modified{
-    /*font-family: 'Brush Script MT', cursive;*/
+.modified {
     font-style: italic;
 }
 .finished {
     text-decoration: line-through;
     color: #999999;
 }
-.taskText {
-    width: 100%;
-    margin-left: 20px;   
-}
 .task {
     display: flex;
     justify-content: center;
-    /*align-items: center;*/
 }
 .trashcan {
-    background: #e6e6e6;
+    background: #ffebeb;
     border: none;
-    color: #FF0999;
+    color: #cc0000;
+    cursor: pointer;
     outline: none;
 }
 </style>

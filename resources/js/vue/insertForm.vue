@@ -6,7 +6,7 @@
         <div>
             <label>Részletek:</label><textarea rows="5"  v-model="task.task_content"/>
         </div>
-        <div>
+        <div class="buttons">
             <font-awesome-icon icon = "plus-square"
             @click="insertTask"
             :class=" [ task.task_title ? 'active' : 'inactive', 'plus' ]"
@@ -62,24 +62,32 @@ export default {
         padding: 5px;
         width: 100%;
 }
-
 .insertTask1 div label {
     display: inline-block;
     width: 30%;
     vertical-align: top;
 }
-.insertTask1 div input {
+.insertTask1 div input,
+.insertTask1 div textarea {
+    border: 1px solid #ffffff;
     display: inline-block;
-    width: 70%;
     margin: 0;
     vertical-align: top;
+    width: 70%;
 }
 .insertTask1 div textarea {
-    display: inline-block;
-    width: 70%;
     height: 50px;
-    vertical-align: top;
     resize: none;
+}
+.insertTask1 div input:focus,
+.insertTask1 div textarea:focus {
+    border: 1px solid #000000;
+}
+.insertTask1 .buttons {
+    text-align: right;
+}
+.insertTask1 .buttons svg {
+    cursor: pointer;
 }
 input {
     border: 1px;
