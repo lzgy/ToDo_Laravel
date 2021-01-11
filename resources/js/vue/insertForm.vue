@@ -12,7 +12,10 @@
             :class=" [ task.task_title ? 'active' : 'inactive', 'plus' ]"
             />
         </div>
-    </div>  
+        <div v-if="errors" class="bg-red-500 text-white rounded font-bold">
+            {{ errors }}
+        </div>
+    </div>
 </template>
 
 <script>
@@ -22,7 +25,8 @@ export default {
             task: {
                 task_title: "",
                 task_content: ""
-            }
+            },
+            errors: null
         }
     },
     methods: {
@@ -36,13 +40,14 @@ export default {
             })
             .then( response => {
                 if (response.status == 201) {
-                    this.task.task_title == "";
-                    this.task.task_content == "";
+                    this.task.task_title = "";
+                    this.task.task_content = "";
                     this.$emit('reloadlist');
                 }
             })
             .catch( error => {
-                consoloe.log( error );
+                this.errors = "A feladat hozzáadása sikertelen!";//error.response.data.message;
+                console.log( error );
             })
         }
     }
@@ -106,5 +111,17 @@ input {
 }
 .inactive {
     color:grey;
+}
+.bg-red-500 {
+    background-color: red;
+}
+.text-white {
+    color: white;
+}
+.font-bold {
+    font-weight: bold;
+}
+.rounded {
+    border-radius: 5px;
 }
 </style>

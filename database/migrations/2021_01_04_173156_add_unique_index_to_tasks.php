@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTasksTable extends Migration
+class AddUniqueIndexToTasks extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->string('task_title');
-            $table->mediumText('task_content');
-            $table->boolean('isFinished');
-            $table->timestamps();
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->unique('task_title');
+            $table->unique('task_title', 'task_content');
         });
     }
 
@@ -29,6 +26,8 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        Schema::table('tasks', function (Blueprint $table) {
+            //
+        });
     }
 }

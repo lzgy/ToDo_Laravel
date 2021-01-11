@@ -1,5 +1,5 @@
 <template>
-    <div class = "task">
+    <div class = "task rounded">
         <div class="title">
             <span :class="[task.isFinished ? 'finished' : '']">
                 <div>
@@ -76,5 +76,8 @@ export default {
     color: #cc0000;
     cursor: pointer;
     outline: none;
+}
+.rounded {
+    border-radius: 5px;
 }
 </style>
